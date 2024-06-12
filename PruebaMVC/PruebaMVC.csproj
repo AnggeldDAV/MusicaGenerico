@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -32,6 +33,30 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Views\Shared\Components\ConciertoCarousel\Default.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\Concierto\ConciertoId1.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId10.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId11.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId12.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId13.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId14.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId15.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId16.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId17.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId18.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId19.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId2.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId20.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId21.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId3.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId4.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId5.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId6.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId7.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId8.png" />
+    <None Include="wwwroot\img\Concierto\ConciertoId9.png" />
   </ItemGroup>
 
 </Project>

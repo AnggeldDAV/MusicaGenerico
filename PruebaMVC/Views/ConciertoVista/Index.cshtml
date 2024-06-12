@@ -1,7 +1,7 @@
-﻿
+﻿@model IEnumerable<PruebaMVC.Models.Concierto>
 
 <div>
-    <id style="height:150px;width:auto;"></id>
-    @await Component.InvokeAsync("ConciertoCarousel")
-    <id style="height:150px;width:auto;"></id>
+    <div style="height:150px;"></div>
+    @await Component.InvokeAsync("ConciertoCarousel", @ViewBag.IdConcierto)
+    <div style="height:150px;"></div>
 </div>
