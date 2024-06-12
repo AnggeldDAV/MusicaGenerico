@@ -223,3 +223,12 @@ a {
         color: #1E7491;
     }
 
+/*google font*/
+
+.jacquard-24-regular {
+    font-family: "Jacquard 24", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+

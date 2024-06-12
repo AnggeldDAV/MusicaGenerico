@@ -14,6 +14,7 @@ namespace PruebaMVC.Controllers
             ViewBag.Pagina = pagina;
             var concierto = lista.Take(new Range(pagina, pagina + 1)).FirstOrDefault();
             ViewBag.IdConcierto = concierto.Id;
+            ViewBag.Url = $"img/Concierto/ConciertoId{concierto.Id}.png";
             
             return View();
         }
