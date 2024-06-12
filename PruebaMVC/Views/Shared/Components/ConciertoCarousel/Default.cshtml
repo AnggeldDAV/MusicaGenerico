@@ -1,40 +1,60 @@
 ﻿@model System.Collections.Generic.List<PruebaMVC.Models.Concierto>
 
-<div id="carouselExampleCaptions" class="carousel slide">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
+<div id="carouselExampleCaptions" class="carousel slide ms-3 me-3">
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="..." class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Some representative placeholder content for the first slide.</p>
+        @foreach (var item in Model)
+        {
+            <div class="carousel-item active">
+                <div class="d-flex">
+                    <div class="container-fluid d-flex flex-column justify-content-between" style="background-image:url('img/Concierto/ConciertoId'+ @(@Html.DisplayFor(modelItem => item.Id).ToString()) + '.png');background-repeat:no-repeat;background-size:cover;height:550px;width:1000px;color:white;">
+                        <h1 class="mt-4 ms-4">@Html.DisplayFor(modelItem => item.Titulo)</h1>
+                        <div class="mb-4 d-flex">
+                            <h2 class="ms-2">@Html.DisplayFor(modelItem => item.Lugar)</h2>
+                            <h2 class="ms-auto me-2">@Html.DisplayFor(modelItem => item.Precio)</h2>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex align-items-center" style="background-color:antiquewhite;height:550px">
+                        <div class="container-fluid  ms-4 me-4" style="column-count:2;column-gap:20px;column-rule:4px double black;">
+                            <h1>Descripción concierto</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et ultricies ipsum. Vivamus consectetur scelerisque magna, sed varius mauris pellentesque nec.
+                                Maecenas cursus sed lacus non vestibulum. Proin efficitur, odio in lobortis varius, ipsum augue molestie nulla, vel sollicitudin ex odio in ligula. Vivamus a ornare nunc,
+                                nec porttitor massa. Fusce vel risus urna. Integer elementum, dolor ac posuere ultrices, tellus lorem bibendum libero, in imperdiet ligula quam vitae sapien. Aenean tempus,
+                                ante at sollicitudin lobortis, lorem ante eleifend nunc, vitae convallis ipsum massa a risus. Suspendisse ut ex egestas, ornare massa quis, accumsan justo.
+                                Vivamus tristique nibh vitae leo commodo rutrum. In eros velit, fermentum tincidunt velit eget, cursus sollicitudin nulla. Ut sed porttitor enim.
+                                Mauris porta risus a magna efficitur, et ornare felis viverra. Aenean risus turpis, cursus sit amet diam et, volutpat vehicula arcu. Fusce pretium at lorem quis bibendum.
+                            </p>
+                            @* <p>
+                                Aliquam justo urna, consequat sed maximus et, dapibus eu lectus. Vivamus in lectus augue. Pellentesque leo dui, imperdiet id interdum eget, laoreet et lacus.
+                                Vestibulum sit amet laoreet purus, in facilisis orci. Phasellus volutpat mi nunc, sit amet laoreet lorem maximus nec. Maecenas at consequat ipsum, vitae dapibus urna.
+                                In porta ex ac enim cursus, a tincidunt felis sodales.
+                            </p> *@
+                            @* <p>
+                                Duis ultricies at sem sit amet posuere. Vivamus lobortis ut lorem ac egestas. Nam nec ullamcorper enim. Nullam erat ipsum, bibendum ut lorem ac, congue egestas urna.
+                                Ut non posuere risus, eu finibus libero. Curabitur eget ipsum venenatis, condimentum libero vel, rhoncus augue. Donec sagittis cursus egestas. Donec id libero commodo,
+                                sollicitudin sapien sed, tincidunt nunc. In et venenatis arcu, ut condimentum justo. Morbi vitae turpis bibendum, suscipit elit at, dapibus dolor. Ut at diam dapibus,
+                                pulvinar augue eget, ultrices arcu. Proin porttitor neque sed justo aliquet, ut efficitur ex blandit. Curabitur sed viverra urna.
+                            </p> *@
+                            @* <p>
+                                Vivamus ac risus faucibus, sodales justo sed, varius enim. Donec erat nunc, faucibus a tortor sagittis, malesuada efficitur quam. Ut hendrerit arcu vitae feugiat tristique.
+                                Donec eu ipsum sit amet augue ultricies tristique eu sit amet ipsum. Quisque interdum eleifend odio, semper tincidunt ex tincidunt et.
+                                Sed facilisis neque ac lectus dignissim venenatis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                                Nullam tortor risus, viverra vel erat eu, feugiat ullamcorper lacus. Praesent id purus vel mi blandit euismod. Sed dapibus ut tortor at lobortis.
+                        </p> *@
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
-            </div>
-        </div>
+        }
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+    <form asp-action="Index" asp-controller="ConciertoVista" enctype="multipart/form-data">
+        <button class="carousel-control-prev" type="submit" value="@(@ViewBag.Pagina - 1)" name="pagina">
+            <span style="background-color:red;height:100px;" class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="submit" value="@(@ViewBag.Pagina + 1)" name="pagina">
+            <span style="background-color:red;height:100px;;" class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </form>
 </div>
