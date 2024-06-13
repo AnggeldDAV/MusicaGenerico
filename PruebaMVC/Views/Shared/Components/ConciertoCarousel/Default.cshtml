@@ -6,11 +6,13 @@
         {
             <div class="carousel-item active">
                 <div class="d-flex justify-content-between" id="carouselContenedor" style="background-color:antiquewhite;">
-                    <div class="d-flex flex-column justify-content-between" id="carouselImagen" style="background-image:url(@(ViewBag.Url));background-repeat:no-repeat;background-size:cover;color:white;font-size:600%;">
-                        <p class="mt-4 ms-4" id="tituloCarousel">@Html.DisplayFor(modelItem => item.Titulo)</p>
-                        <div class="mb-4 d-flex">
-                            <p class="ms-2">Lugar: @Html.DisplayFor(modelItem => item.Lugar)</p>
-                            <p class="ms-auto me-2">Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                    <div style="background-image:url(img/Concierto/ConciertoNotFound.jpg);background-repeat:no-repeat;background-size:cover;">
+                        <div class="d-flex flex-column justify-content-between" id="carouselImagen" style="background-image:url(@(ViewBag.Url));background-repeat:no-repeat;background-size:cover;color:white;font-size:600%;">
+                            <p class="mt-4 ms-4" id="tituloCarousel">@Html.DisplayFor(modelItem => item.Titulo)</p>
+                            <div class="mb-4 d-flex">
+                                <p class="ms-2">Lugar: @Html.DisplayFor(modelItem => item.Lugar)</p>
+                                <p class="ms-auto me-2">Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center" id="carouselTexto" style="height:550px;width:750px;">
