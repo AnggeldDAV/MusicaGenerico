@@ -279,6 +279,7 @@ public partial class GrupoCContext : DbContext
                 .HasNoKey()
                 .ToView("VistaGruposArtistas");
 
+            entity.Property(e => e.Foto).HasColumnType("image");
             entity.Property(e => e.Genero)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -304,6 +305,9 @@ public partial class GrupoCContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Titulo)
                 .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UrlVideo)
+                .HasMaxLength(255)
                 .IsUnicode(false);
         });
 
