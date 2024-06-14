@@ -5,3 +5,25 @@
     @await Component.InvokeAsync("ConciertoCarousel", @ViewBag.IdConcierto)
     <div style="height:150px;"></div>
 </div>
+
+<div class="d-flex flex-wrap justify-content-around">
+    @foreach(var item in Model)
+    {
+        @await Component.InvokeAsync("TarjetaConcierto", item.Id)
+    }
+</div>
+<div class="d-flex justify-content-center">
+    <form asp-action="index" asp-controller="ConciertoVista">
+        <input style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;" value="Pagina: @(ViewBag.PaginaTarjetas == 1 ? 1 : ViewBag.PaginaTarjetas - 1)" type="submit" />
+        <input type="hidden" name="pagina" value="@(ViewBag.Pagina)"/>
+        <input type="hidden" name="paginaTarjeta" value="@(ViewBag.PaginaTarjetas == 1 ? 1 : ViewBag.PaginaTarjetas - 1)" />
+    </form>
+    <div class="ms-5 text-center d-flex justify-content-center align-items-center" style="background-color:darkturquoise;color:white;width:150px;height:50px;">
+        <div>Pagina actual: @(ViewBag.PaginaTarjetas)</div>
+    </div>
+    <form class="ms-5" asp-action="index" asp-controller="ConciertoVista">
+        <input style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;" value="Pagina: @(ViewBag.PaginaTarjetas > (Math.Ceiling((double)Model.Count() / 8) + 1) ? ViewBag.PaginaTarjetas : ViewBag.PaginaTarjetas + 1)" type="submit" />
+        <input type="hidden" name="pagina" value="@(ViewBag.Pagina)" />
+        <input type="hidden" name="paginaTarjeta" value="@(ViewBag.PaginaTarjetas > (Math.Ceiling((double)Model.Count() / 8) + 1) ? ViewBag.PaginaTarjetas : ViewBag.PaginaTarjetas + 1 )" />
+    </form>
+</div>
