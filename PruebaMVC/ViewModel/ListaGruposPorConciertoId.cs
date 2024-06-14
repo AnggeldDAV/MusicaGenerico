@@ -8,9 +8,9 @@ namespace PruebaMVC.ViewModel
     {
         public async Task<List<ConciertoConGruposcs>> dameGrupos(int ConciertoId)
         {
-            var datosComponente = from c in (await _contextConcierto.DameTodos())
-                join gc in (await _contextConciertoGrupo.DameTodos()) on c.Id equals gc.ConciertosId
-                join g in (await _contextGrupo.DameTodos()) on gc.GruposId equals g.Id
+            var datosComponente = from c in (await _contextConcierto.DameTodos()).AsParallel()
+                join gc in (await _contextConciertoGrupo.DameTodos()).AsParallel() on c.Id equals gc.ConciertosId
+                join g in (await _contextGrupo.DameTodos()).AsParallel() on gc.GruposId equals g.Id
                 where c.Id == ConciertoId
                 select new ConciertoConGruposcs()
                 {
@@ -23,11 +23,6 @@ namespace PruebaMVC.ViewModel
                     ConciertosId = gc.ConciertosId,
                     Nombre = g.Nombre
                 };
-            Console.WriteLine("Numero Grupos: " + datosComponente.Count());
-            foreach (var grupo in datosComponente)
-            {
-                Console.WriteLine("Nombre Grupos: " + grupo.Nombre);
-            }
 
             return datosComponente.ToList();
         }

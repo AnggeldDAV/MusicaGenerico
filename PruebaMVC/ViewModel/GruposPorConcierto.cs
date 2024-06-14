@@ -9,7 +9,7 @@ namespace PruebaMVC.ViewModel
     {
         public async Task<List<ConciertoConListaGrupos>> dameListaDeConciertoConGrupos(int conciertoId)
         {
-            var conciertos = from c in (await _contextConcierto.DameTodos()) where c.Id == conciertoId select c;
+            var conciertos = from c in (await _contextConcierto.DameTodos()).AsParallel() where c.Id == conciertoId select c;
             ConciertoConListaGrupos listaDeConcierto = new ConciertoConListaGrupos();
             foreach (var concierto in conciertos)
             {

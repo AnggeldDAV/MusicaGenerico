@@ -16,7 +16,7 @@ namespace PruebaMVC.Controllers
             ViewBag.IdConcierto = concierto.Id;
             ViewBag.Pagina = pagina;
             ViewBag.Url = $"img/Concierto/ConciertoId{concierto.Id}.png";
-            ViewBag.PaginaTarjetas = paginaTarjeta; ;
+            ViewBag.PaginaTarjetas = paginaTarjeta; 
             return View(lista.Take(new Range(8 * (paginaTarjeta - 1), 8 * (paginaTarjeta))));
         }
     }
