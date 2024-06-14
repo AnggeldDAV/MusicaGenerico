@@ -1,21 +1,24 @@
-﻿@model System.Collections.Generic.List<PruebaMVC.Models.Concierto>
+﻿@using Microsoft.CodeAnalysis.Elfie.Model.Map
+@model System.Collections.Generic.List<PruebaMVC.Models.Concierto>
 
 <div id="carouselExampleCaptions" class="carousel slide jacquard-24-regular" style="margin-left:25px;margin-right:25px;">
     <div class="carousel-inner">
         @foreach (var item in Model)
         {
-            <div class="carousel-item active">
-                <div class="d-flex justify-content-between" id="carouselContenedor" style="background-color:antiquewhite;">
+            @(ViewBag.Prueba = @Html.DisplayFor(modelItem => item.Id))
+            @(ViewBag.Url = $"img/Concierto/ConciertoId{@Html.DisplayFor(modelItem => item.Id)}.png")
+            <div class="carousel-item">
+                <div class="d-flex justify-content-between carouselContenedor" style="background-color:antiquewhite;">
                     <div style="background-image:url(img/Concierto/ConciertoNotFound.jpg);background-repeat:no-repeat;background-size:cover;">
-                        <div class="d-flex flex-column justify-content-between" id="carouselImagen" style="background-image:url(@(ViewBag.Url));background-repeat:no-repeat;background-size:cover;color:white;font-size:600%;">
-                            <p class="mt-4 ms-4" id="tituloCarousel">@Html.DisplayFor(modelItem => item.Titulo)</p>
+                        <div class="d-flex flex-column justify-content-between carouselImagen" style="background-image:url(@(ViewBag.Url));background-repeat:no-repeat;background-size:cover;color:white;font-size:600%;">
+                            <p class="mt-4 ms-4 tituloCarousel">@Html.DisplayFor(modelItem => item.Titulo)</p>
                             <div class="mb-4 d-flex">
                                 <p class="ms-2">Lugar: @Html.DisplayFor(modelItem => item.Lugar)</p>
-                                <p class="ms-auto me-2">Precio: @Html.DisplayFor(modelItem => item.Precio)</p>
+                                <p class="ms-auto me-2" style="color:black;">Precio: @(ViewBag.Prueba)</p>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center" id="carouselTexto" style="height:550px;width:750px;">
+                    <div class="d-flex align-items-center carouselTexto" style="height:550px;width:750px;">
                         <div class="container-fluid  ms-4 me-4" style="column-count:2;column-gap:20px;column-rule:4px double black;">
                             <h1>Descripción concierto</h1>
                             <p>
@@ -49,15 +52,13 @@
             </div>
         }
     </div>
-    <form asp-action="Index" asp-controller="ConciertoVista" enctype="multipart/form-data">
-        <button class="carousel-control-prev" type="submit" value="@(@ViewBag.Pagina - 1)" name="pagina">
-            <span style="background-color:red;height:100px;" class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="submit" value="@(@ViewBag.Pagina + 1)" name="pagina">
-            <span style="background-color:red;height:100px;" class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </form>
+    <a id="previo" class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span style="background-color:red;height:100px;" class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a id="siguiente" class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span style="background-color:red;height:100px;" class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
 </div>
 
