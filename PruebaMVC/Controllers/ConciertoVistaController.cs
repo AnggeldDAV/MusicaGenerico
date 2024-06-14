@@ -6,7 +6,7 @@ namespace PruebaMVC.Controllers
 {
     public class ConciertoVistaController(IGenericRepositorio<Concierto> _contextConcierto) : Controller
     {
-        public async Task<ActionResult> Index(int pagina = 0)
+        public async Task<ActionResult> Index(int pagina = 0, int paginaTarjeta = 1)
         {
             var lista = (await _contextConcierto.DameTodos());
             if (pagina < 0) pagina = 0;
@@ -14,9 +14,10 @@ namespace PruebaMVC.Controllers
             ViewBag.Pagina = pagina;
             var concierto = lista.Take(new Range(pagina, pagina + 1)).FirstOrDefault();
             ViewBag.IdConcierto = concierto.Id;
+            ViewBag.Pagina = pagina;
             ViewBag.Url = $"img/Concierto/ConciertoId{concierto.Id}.png";
-            
-            return View();
+            ViewBag.PaginaTarjetas = paginaTarjeta; ;
+            return View(lista.Take(new Range(8 * (paginaTarjeta - 1), 8 * (paginaTarjeta))));
         }
     }
 }
