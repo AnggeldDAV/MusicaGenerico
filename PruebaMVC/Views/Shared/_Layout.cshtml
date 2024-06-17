@@ -176,20 +176,24 @@
         }
     </script>
     <script>
-        $('#Filtro').css("display", "none");
+        $('#Filtro').addClass("esconder");
+        $("#Filtro").removeClass('d-flex');
         $('#Filtro').css("height", $(window).height() + "px");
         $(".filtroIcono").css({
             "position": "fixed",
             "left": "0px",
-            "top":"250px"
+            "top":"150px",
+            "z-index": "2"
         });
         $('.botonFiltro').on('click', function() {
-            if ($('#Filtro').is(":visible")) {
-                $('#Filtro').hide();
-                alert('entravisible');
+            if ($('#Filtro').hasClass("esconder")) {
+                $('#Filtro').removeClass("esconder");
+                $('#Filtro').addClass("d-flex");
+                $(".botonFiltro").addClass('botonFiltroClickado');
             }else {
-                alert('entrahide');
-                $('#Filtro').show();
+                $(".botonFiltro").removeClass('botonFiltroClickado');
+                $('#Filtro').addClass("esconder");
+                $("#Filtro").removeClass('d-flex');
             }
         });
         function clickadoFiltro() {

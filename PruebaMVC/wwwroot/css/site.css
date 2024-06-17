@@ -239,7 +239,19 @@ a {
     border-radius:0px 50px 50px 0px;
 }
 
+.botonFiltroClickado {
+    background: rgba(0, 102, 255, 0.6);
+    border-radius: 0px 50px 0px 0px;
+    width: 450px;
+}
+
 .botonFiltro:hover {
     width: 450px;
     background-color: red;
 }
+
+.esconder {
+    display: none;
+}
+
+
