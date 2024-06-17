@@ -5,16 +5,19 @@
     <div class="carousel-inner">
         @foreach (var item in Model)
         {
-            @(ViewBag.Prueba = @Html.DisplayFor(modelItem => item.Id))
-            @(ViewBag.Url = $"img/Concierto/ConciertoId{@Html.DisplayFor(modelItem => item.Id)}.png")
+            <div style="display:none;">
+                @(ViewBag.Id = item.Id)
+                @(ViewBag.Url = "img/Concierto/ConciertoId" + @ViewBag.Id + ".png")
+            </div>
+
             <div class="carousel-item">
                 <div class="d-flex justify-content-between carouselContenedor" style="background-color:antiquewhite;">
-                    <div style="background-image:url(img/Concierto/ConciertoNotFound.jpg);background-repeat:no-repeat;background-size:cover;">
+                    <div style="background-image:url('img/Concierto/ConciertoNotFound.jpg');background-repeat:no-repeat;background-size:cover;">
                         <div class="d-flex flex-column justify-content-between carouselImagen" style="background-image:url(@(ViewBag.Url));background-repeat:no-repeat;background-size:cover;color:white;font-size:600%;">
                             <p class="mt-4 ms-4 tituloCarousel">@Html.DisplayFor(modelItem => item.Titulo)</p>
                             <div class="mb-4 d-flex">
                                 <p class="ms-2">Lugar: @Html.DisplayFor(modelItem => item.Lugar)</p>
-                                <p class="ms-auto me-2" style="color:black;">Precio: @(ViewBag.Prueba)</p>
+                                <p class="ms-auto me-2">Precio:  @Html.DisplayFor(modelItem => item.Precio)</p>
                             </div>
                         </div>
                     </div>
