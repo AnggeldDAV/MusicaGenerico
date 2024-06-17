@@ -77,7 +77,7 @@ namespace PruebaMVC.Controllers
 
             var vista = await _contextVista.DameTodos();
             var cancione = vista
-                .FirstOrDefault(m => m.Id == id);
+                .Find(m => m.Id == id);
             if (cancione == null)
             {
                 return NotFound();

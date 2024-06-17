@@ -176,6 +176,27 @@
         }
     </script>
     <script>
+        $('#Filtro').css("display", "none");
+        $('#Filtro').css("height", $(window).height() + "px");
+        $(".filtroIcono").css({
+            "position": "fixed",
+            "left": "0px",
+            "top":"250px"
+        });
+        $('.botonFiltro').on('click', function() {
+            if ($('#Filtro').is(":visible")) {
+                $('#Filtro').hide();
+                alert('entravisible');
+            }else {
+                alert('entrahide');
+                $('#Filtro').show();
+            }
+        });
+        function clickadoFiltro() {
+
+        }
+    </script>
+    <script>
         $('#pagSiguiente').on('click', pagSiguiente);
         $('#pagAnterior').on('click', pagAnterior);
         paginacion();
