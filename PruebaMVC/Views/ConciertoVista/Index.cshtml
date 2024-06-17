@@ -13,17 +13,9 @@
     }
 </div>
 <div class="d-flex justify-content-center">
-    <form asp-action="index" asp-controller="ConciertoVista">
-        <input style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;" value="Pagina: @(ViewBag.PaginaTarjetas == 1 ? 1 : ViewBag.PaginaTarjetas - 1)" type="submit" />
-        <input type="hidden" name="pagina" value="@(ViewBag.Pagina)"/>
-        <input type="hidden" name="paginaTarjeta" value="@(ViewBag.PaginaTarjetas == 1 ? 1 : ViewBag.PaginaTarjetas - 1)" />
-    </form>
+    <div id="pagAnterior" class="btn" style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;">1</div>
     <div class="ms-5 text-center d-flex justify-content-center align-items-center" style="background-color:darkturquoise;color:white;width:150px;height:50px;">
-        <div>Pagina actual: @(ViewBag.PaginaTarjetas)</div>
+        <div>Pagina actual: <p style="display:inlne;" id="pagActual">1</p></div>
     </div>
-    <form class="ms-5" asp-action="index" asp-controller="ConciertoVista">
-        <input style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;" value="Pagina: @(ViewBag.PaginaTarjetas > (Math.Ceiling((double)Model.Count() / 8) + 1) ? ViewBag.PaginaTarjetas : ViewBag.PaginaTarjetas + 1)" type="submit" />
-        <input type="hidden" name="pagina" value="@(ViewBag.Pagina)" />
-        <input type="hidden" name="paginaTarjeta" value="@(ViewBag.PaginaTarjetas > (Math.Ceiling((double)Model.Count() / 8) + 1) ? ViewBag.PaginaTarjetas : ViewBag.PaginaTarjetas + 1 )" />
-    </form>
+    <div id="pagSiguiente" class="ms-5 btn" style="border-radius:25px;background-color:darkturquoise;color:white;width:150px;height:50px;">2</div>
 </div>
