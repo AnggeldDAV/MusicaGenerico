@@ -7,7 +7,7 @@
 
         @foreach (var item in Model)
         {
-            @if (item.Lugar != null)
+            if (item.Lugar != null)
             {
                 ViewBag.Valor = item.Lugar;
             }
