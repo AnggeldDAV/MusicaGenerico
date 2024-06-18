@@ -182,7 +182,7 @@
         $(".filtroIcono").css({
             "position": "fixed",
             "left": "0px",
-            "top":"150px",
+            "top":"50px",
             "z-index": "2"
         });
         $('.botonFiltro').on('click', function() {
@@ -196,9 +196,28 @@
                 $("#Filtro").removeClass('d-flex');
             }
         });
-        function clickadoFiltro() {
+        $('#x').on('click', function () {
+            if ($('.botonFiltro').hasClass('esconder')) {
+                $('.botonFiltro').removeClass('esconder');
+            } else {
+                $('.botonFiltro').addClass('esconder');
+                $(".botonFiltro").removeClass('botonFiltroClickado');
+                $('#Filtro').addClass("esconder");
+                $("#Filtro").removeClass('d-flex');
+            }
+        });
+    </script>
+    <script>
+        let tarjetasFiltradas = $('#contenedorTarjetas').children();
+        tarjetasFiltradas.addClass('filtrado');
+        $('#filtroNombreConcierto').on('change', function () {
+            for (let i = 0; i < tarjetasFiltradas.length; i++) {
 
-        }
+            }
+            if (!$('#nombre').text().includes($('#filtroNombreConcierto').val())) {
+
+            }
+        });
     </script>
     <script>
         $('#pagSiguiente').on('click', pagSiguiente);
