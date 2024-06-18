@@ -234,13 +234,11 @@ a {
 /*Concierto filtros*/
 
 .botonFiltro {
-    background: rgba(0, 102, 255, 0.6);
     width:150px;
     border-radius:0px 50px 50px 0px;
 }
 
 .botonFiltroClickado {
-    background: rgba(0, 102, 255, 0.6);
     border-radius: 0px 50px 0px 0px;
     width: 450px;
 }
@@ -252,6 +250,10 @@ a {
 
 .esconder {
     display: none;
+}
+
+.filtrado {
+
 }
 
 
