@@ -2,13 +2,13 @@
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
 
-namespace PruebaMVC.Views.Shared.Componets
+namespace PruebaMVC.Views.Shared.Components
 {
-    public class ConciertoCarouselViewComponent(IGenericRepositorio<Concierto> _contextConcierto) : ViewComponent
+    public class ConciertoCarouselViewComponent(IGenericRepositorio<Concierto> contextConcierto) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var concierto = await _contextConcierto.DameTodos();
+            var concierto = await contextConcierto.DameTodos();
             
             return View(concierto);
         }

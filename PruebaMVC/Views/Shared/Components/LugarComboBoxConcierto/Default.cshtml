@@ -7,7 +7,7 @@
 
         @foreach (var item in Model)
         {
-            <div style="display:none">@(ViewBag.Valor = item.Lugar)</div>
+            <div style="display:none">@(if(item.Lugar != null)ViewBag.Valor = item.Lugar)</div>
             <option value=@(ViewBag.Valor)>@Html.DisplayFor(modelItem => item.Lugar)</option>
         }
     </select>

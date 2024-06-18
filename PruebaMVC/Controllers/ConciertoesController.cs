@@ -72,17 +72,13 @@ namespace PruebaMVC.Controllers
         public async Task<IActionResult> IndexConsulta()
         {
             var vista = await _context.DameTodos();
-            var consulta = vista.Where(x=> x.Fecha !=null && x.Fecha.Value.Year >2015 && x.Precio >30);
+            var consulta = vista.Where(x=> x is { Fecha.Year: > 2015, Precio: > 30 });
             return View(consulta);
         }
 
         // GET: Conciertoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.DameUno((int)id) == null)
-            {
-                return NotFound();
-            }
 
             var vista = await _context.DameTodos();
             var context = vista.Select(x=>x);

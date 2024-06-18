@@ -4,11 +4,11 @@ using PruebaMVC.Services.Repositorio;
 
 namespace PruebaMVC.Views.Shared.Components
 {
-    public class ComboBoxGruposViewComponent(IGenericRepositorio<Grupo> _contextGrupos) : ViewComponent
+    public class ComboBoxGruposViewComponent(IGenericRepositorio<Grupo> contextGrupos) : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(await _contextGrupos.DameTodos());
+            return View(await contextGrupos.DameTodos());
         }
     }
 }
