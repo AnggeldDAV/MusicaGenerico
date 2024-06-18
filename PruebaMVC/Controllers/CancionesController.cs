@@ -112,10 +112,6 @@ namespace PruebaMVC.Controllers
         // GET: Canciones/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
             var conjunto = await _contextVista.DameTodos();
             var cancione = conjunto.FirstOrDefault(x => x.Id == id);
             if (cancione == null)
@@ -142,7 +138,7 @@ namespace PruebaMVC.Controllers
             {
                 try
                 {
-                    _context.Modificar(id,cancione);
+                    await _context.Modificar(id,cancione);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
