@@ -187,7 +187,7 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var concierto = await _context.DameUno((int)id);
+            var concierto = await _context.DameUno(id);
             if (concierto != null)
             {
                 await _context.Borrar(id);
@@ -198,7 +198,7 @@ namespace PruebaMVC.Controllers
         private async Task<bool> ConciertoExists(int id)
         {
             var vista = await _context.DameTodos();
-            return vista.Any(e => e.Id == id);
+            return vista.Exists(e => e.Id == id);
         }
     }
 }

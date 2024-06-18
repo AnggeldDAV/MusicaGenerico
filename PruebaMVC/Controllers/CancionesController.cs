@@ -113,7 +113,7 @@ namespace PruebaMVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var conjunto = await _contextVista.DameTodos();
-            var cancione = conjunto.FirstOrDefault(x => x.Id == id);
+            var cancione = conjunto.Find(x => x.Id == id);
             if (cancione == null)
             {
                 return NotFound();
@@ -154,7 +154,7 @@ namespace PruebaMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             var vista = await _contextVista.DameTodos();
-            var conjunto = vista.FirstOrDefault(x => x.Id == id);
+            var conjunto = vista.Find(x => x.Id == id);
             ViewData["AlbumesId"] = new SelectList(await _contextAlbume.DameTodos(), "Id", "Id", cancione.AlbumesId);
             return View(conjunto);
         }
@@ -167,7 +167,7 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
             var vista = await _contextVista.DameTodos();
-            var cancione = vista.FirstOrDefault(m => m.Id == id);
+            var cancione = vista.Find(m => m.Id == id);
             if (cancione == null)
             {
                 return NotFound();
@@ -192,7 +192,7 @@ namespace PruebaMVC.Controllers
         private async Task<bool> CancioneExists(int id)
         {
             var vista = await _context.DameTodos();
-            return vista.Any(e => e.Id == id);
+            return vista.Exists(e => e.Id == id);
         }
     }
 }
