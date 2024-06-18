@@ -13,6 +13,9 @@ namespace PruebaMVC.Controllers
         private readonly IGenericRepositorio<Concierto> _contextConcierto;
         private readonly IGenericRepositorio<VistaCancionConcierto> _contextVista;
 
+        private const string DataCanciones = "CancionesId";
+        private const string DataConciertos = "ConciertosId";
+        private const string DataComboTitulo = "Titulo";
 
         public CancionesConciertoesController(IGenericRepositorio<CancionesConcierto> context, IGenericRepositorio<Cancione> contextCancione, IGenericRepositorio<Concierto> contextConcierto, IGenericRepositorio<VistaCancionConcierto> contextVista)
         {
@@ -38,10 +41,6 @@ namespace PruebaMVC.Controllers
             }
             var vista = await _contextVista.DameTodos();
             var cancionesConcierto = vista.AsParallel().FirstOrDefault(m => m.Id == id);
-            if (cancionesConcierto == null)
-            {
-                return NotFound();
-            }
 
             return View(cancionesConcierto);
         }
@@ -49,8 +48,8 @@ namespace PruebaMVC.Controllers
         // GET: CancionesConciertoes/Create
         public async Task<IActionResult> Create()
         {
-            ViewData["CancionesId"] = new SelectList(await _contextCancione.DameTodos(), "Id", "Titulo");
-            ViewData["ConciertosId"] = new SelectList(await _contextConcierto.DameTodos(), "Id", "Titulo");
+            ViewData[DataCanciones] = new SelectList(await _contextCancione.DameTodos(), "Id", DataComboTitulo);
+            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo);
             return View();
         }
 
@@ -66,8 +65,8 @@ namespace PruebaMVC.Controllers
                 await _context.Agregar(cancionesConcierto);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CancionesId"] = new SelectList(await _contextCancione.DameTodos(), "Id", "Titulo", cancionesConcierto.CancionesId);
-            ViewData["ConciertosId"] = new SelectList(await _contextConcierto.DameTodos(), "Id", "Titulo", cancionesConcierto.ConciertosId);
+            ViewData[DataCanciones] = new SelectList(await _contextCancione.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.CancionesId);
+            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.ConciertosId);
             return View(cancionesConcierto);
         }
 
@@ -83,8 +82,8 @@ namespace PruebaMVC.Controllers
 
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
-            ViewData["CancionesId"] = new SelectList(await _contextCancione.DameTodos(), "Id", "Titulo", cancionesConcierto.CancionesId);
-            ViewData["ConciertosId"] = new SelectList(await _contextConcierto.DameTodos(), "Id", "Titulo", cancionesConcierto.ConciertosId);
+            ViewData[DataCanciones] = new SelectList(await _contextCancione.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.CancionesId);
+            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.ConciertosId);
             return View(conjunto);
         }
 
@@ -121,8 +120,8 @@ namespace PruebaMVC.Controllers
             }
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
-            ViewData["CancionesId"] = new SelectList(await _contextCancione.DameTodos(), "Id", "Titulo", cancionesConcierto.CancionesId);
-            ViewData["ConciertosId"] = new SelectList(await _contextConcierto.DameTodos(), "Id", "Titulo", cancionesConcierto.ConciertosId);
+            ViewData[DataCanciones] = new SelectList(await _contextCancione.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.CancionesId);
+            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, cancionesConcierto.ConciertosId);
             return View(conjunto);
         }
 
