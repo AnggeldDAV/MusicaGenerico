@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
@@ -76,18 +72,15 @@ namespace PruebaMVC.Controllers
         }
 
         // GET: CancionesConciertoes/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var cancionesConcierto = await _context.DameUno(id);
-            if (cancionesConcierto == null)
-            {
-                return NotFound();
-            }
+            var cancionesConcierto = await _context.DameUno((int)id);
+
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
             ViewData["CancionesId"] = new SelectList(await _contextCancione.DameTodos(), "Id", "Titulo", cancionesConcierto.CancionesId);
@@ -156,11 +149,9 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cancionesConcierto = await _context.DameUno(id);
-            if (cancionesConcierto != null)
-            {
+
                 await _context.Borrar(id);
-            }
+
             return RedirectToAction(nameof(Index));
         }
 
