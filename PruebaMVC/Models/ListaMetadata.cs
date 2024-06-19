@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PruebaMVC.Models
 {
     [ModelMetadataType(typeof(ListaMetadata))]
-    public partial class Lista { }
+    public partial class Lista;
     public class ListaMetadata
     {
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace PruebaMVC.Models
 
         public int? UsuarioId { get; set; }
 
-        public virtual ICollection<ListasCancione> ListasCanciones { get; set; } = new List<ListasCancione>();
+        public virtual ICollection<ListasCancione> ListasCanciones { get; set; } = [];
 
         public virtual Usuario? Usuario { get; set; }
     }

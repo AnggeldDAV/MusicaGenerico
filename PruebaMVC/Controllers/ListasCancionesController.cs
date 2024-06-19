@@ -1,27 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
 
 namespace PruebaMVC.Controllers
 {
-    public class ListasCancionesController : Controller
+    public class ListasCancionesController(GrupoCContext context) : Controller
     {
-        private readonly GrupoCContext _context;
-
-        public ListasCancionesController(GrupoCContext context)
-        {
-            _context = context;
-        }
-
         // GET: ListasCanciones
         public async Task<IActionResult> Index()
         {
-            var grupoCContext = _context.ListasCanciones.Include(l => l.Canciones).Include(l => l.Listas);
+            var grupoCContext = context.ListasCanciones.Include(l => l.Canciones).Include(l => l.Listas);
             return View(await grupoCContext.ToListAsync());
         }
 
@@ -33,7 +22,7 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
 
-            var listasCancione = await _context.ListasCanciones
+            var listasCancione = await context.ListasCanciones
                 .Include(l => l.Canciones)
                 .Include(l => l.Listas)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -48,8 +37,8 @@ namespace PruebaMVC.Controllers
         // GET: ListasCanciones/Create
         public IActionResult Create()
         {
-            ViewData["CancionesId"] = new SelectList(_context.Canciones, "Id", "Id");
-            ViewData["ListasId"] = new SelectList(_context.Listas, "Id", "Id");
+            ViewData["CancionesId"] = new SelectList(context.Canciones, "Id", "Id");
+            ViewData["ListasId"] = new SelectList(context.Listas, "Id", "Id");
             return View();
         }
 
@@ -62,12 +51,12 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(listasCancione);
-                await _context.SaveChangesAsync();
+                context.Add(listasCancione);
+                await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CancionesId"] = new SelectList(_context.Canciones, "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(_context.Listas, "Id", "Id", listasCancione.ListasId);
+            ViewData["CancionesId"] = new SelectList(context.Canciones, "Id", "Id", listasCancione.CancionesId);
+            ViewData["ListasId"] = new SelectList(context.Listas, "Id", "Id", listasCancione.ListasId);
             return View(listasCancione);
         }
 
@@ -79,13 +68,13 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
 
-            var listasCancione = await _context.ListasCanciones.FindAsync(id);
+            var listasCancione = await context.ListasCanciones.FindAsync(id);
             if (listasCancione == null)
             {
                 return NotFound();
             }
-            ViewData["CancionesId"] = new SelectList(_context.Canciones, "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(_context.Listas, "Id", "Id", listasCancione.ListasId);
+            ViewData["CancionesId"] = new SelectList(context.Canciones, "Id", "Id", listasCancione.CancionesId);
+            ViewData["ListasId"] = new SelectList(context.Listas, "Id", "Id", listasCancione.ListasId);
             return View(listasCancione);
         }
 
@@ -105,8 +94,8 @@ namespace PruebaMVC.Controllers
             {
                 try
                 {
-                    _context.Update(listasCancione);
-                    await _context.SaveChangesAsync();
+                    context.Update(listasCancione);
+                    await context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,8 +110,8 @@ namespace PruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CancionesId"] = new SelectList(_context.Canciones, "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(_context.Listas, "Id", "Id", listasCancione.ListasId);
+            ViewData["CancionesId"] = new SelectList(context.Canciones, "Id", "Id", listasCancione.CancionesId);
+            ViewData["ListasId"] = new SelectList(context.Listas, "Id", "Id", listasCancione.ListasId);
             return View(listasCancione);
         }
 
@@ -134,7 +123,7 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
 
-            var listasCancione = await _context.ListasCanciones
+            var listasCancione = await context.ListasCanciones
                 .Include(l => l.Canciones)
                 .Include(l => l.Listas)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -151,19 +140,19 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var listasCancione = await _context.ListasCanciones.FindAsync(id);
+            var listasCancione = await context.ListasCanciones.FindAsync(id);
             if (listasCancione != null)
             {
-                _context.ListasCanciones.Remove(listasCancione);
+                context.ListasCanciones.Remove(listasCancione);
             }
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ListasCancioneExists(int id)
         {
-            return _context.ListasCanciones.Any(e => e.Id == id);
+            return context.ListasCanciones.Any(e => e.Id == id);
         }
     }
 }

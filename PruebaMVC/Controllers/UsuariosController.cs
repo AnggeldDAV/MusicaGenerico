@@ -1,73 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
 
 namespace PruebaMVC.Controllers
 {
-    public class UsuariosController : Controller
+    public class UsuariosController(IGenericRepositorio<Usuario> context) : Controller
     {
-        private readonly IGenericRepositorio<Usuario> _context;
-
-        public UsuariosController(IGenericRepositorio<Usuario> context)
-        {
-            _context = context;
-        }
-
         // GET: Usuarios
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NombreSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nombre_desc" : "";
             ViewData["EmailSortParm"] = sortOrder == "Email" ? "email_desc" : "Email";
-            if (await _context.DameTodos() == null)
-            {
-                return Problem("Es nulo");
-            }
-            var vista = await _context.DameTodos();
+
+            var vista = await context.DameTodos();
             var usuarios = vista.Select(x => x);
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                usuarios = usuarios.Where(s => s.Nombre!.Contains(searchString));
+                usuarios = usuarios.Where(s => s.Nombre != null && s.Nombre.Contains(searchString));
             }
-            switch (sortOrder)
+
+            usuarios = sortOrder switch
             {
-                case "nombre_desc":
-                    usuarios = usuarios.OrderByDescending(s => s.Nombre);
-                    break;
-                case "Email":
-                    usuarios = usuarios.OrderBy(s => s.Email);
-                    break;
-                case "email_desc":
-                    usuarios = usuarios.OrderByDescending(s => s.Email);
-                    break;     
-                default:
-                    usuarios = usuarios.OrderBy(s => s.Nombre);
-                    break;
-            }
+                "nombre_desc" => usuarios.OrderByDescending(s => s.Nombre),
+                "Email" => usuarios.OrderBy(s => s.Email),
+                "email_desc" => usuarios.OrderByDescending(s => s.Email),
+                _ => usuarios.OrderBy(s => s.Nombre)
+            };
             return View(usuarios);
         }
 
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuario = _context.DameUno(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
-
+            var usuario = context.DameUno(id);
+          
             return View(await usuario);
         }
 
@@ -86,7 +54,7 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.Agregar(usuario);
+                await context.Agregar(usuario);
                 return RedirectToAction(nameof(Index));
             }
             return View(usuario);
@@ -95,16 +63,8 @@ namespace PruebaMVC.Controllers
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var usuario = await context.DameUno(id);
 
-            var usuario = await _context.DameUno(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
             return View(usuario);
         }
 
@@ -124,7 +84,7 @@ namespace PruebaMVC.Controllers
             {
                 try
                 {
-                   _context.Modificar(id,usuario);
+                    await context.Modificar(id, usuario);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -145,16 +105,7 @@ namespace PruebaMVC.Controllers
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var usuario =await _context.DameUno(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+            var usuario = await context.DameUno(id);
 
             return View(usuario);
         }
@@ -164,17 +115,13 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuario =await _context.DameUno(id);
-            if (usuario != null)
-            {
-               await _context.Borrar(id);
-            }
-            return RedirectToAction(nameof(Index));
+            await context.Borrar(id);
+         return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> UsuarioExists(int id)
         {
-            var vista = await _context.DameTodos();
+            var vista = await context.DameTodos();
             return vista.Any(e => e.Id == id);
         }
     }

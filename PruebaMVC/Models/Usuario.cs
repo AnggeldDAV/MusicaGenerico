@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace PruebaMVC.Models;
 
 public partial class Usuario
@@ -13,5 +11,5 @@ public partial class Usuario
 
     public string? Contraseña { get; set; }
 
-    public virtual ICollection<Lista> Lista { get; set; } = new List<Lista>();
+    public virtual ICollection<Lista> Lista { get; set; } = [];
 }

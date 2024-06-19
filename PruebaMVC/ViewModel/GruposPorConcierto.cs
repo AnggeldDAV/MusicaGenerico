@@ -21,7 +21,7 @@ namespace PruebaMVC.ViewModel
                     Precio = concierto.Precio,
                     Fecha = concierto.Fecha,
                     listaGrupo = await new ListaGruposPorConciertoId(_contextConcierto, _contextConciertoGrupo, _contextGrupo)
-                        .dameGrupos(conciertoId)
+                        .DameGrupos(conciertoId)
                 };
             }
 
