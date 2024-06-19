@@ -4,11 +4,11 @@ using PruebaMVC.Services.Repositorio;
 
 namespace PruebaMVC.Controllers
 {
-    public class ConciertoVistaController(IGenericRepositorio<Concierto> _contextConcierto) : Controller
+    public class ConciertoVistaController(IGenericRepositorio<Concierto> contextConcierto) : Controller
     {
         public async Task<ActionResult> Index()
         {
-            return View(await _contextConcierto.DameTodos());
+            return View(await contextConcierto.DameTodos());
         }
     }
 }

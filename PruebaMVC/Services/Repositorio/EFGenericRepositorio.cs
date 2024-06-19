@@ -40,7 +40,7 @@ namespace PruebaMVC.Services.Repositorio
 
         public async Task<List<T>> Filtra(Expression<Func<T, bool>> predicado)
         {
-            return _context.Set<T>().Where<T>(predicado).ToList();
+            return await _context.Set<T>().Where<T>(predicado).ToListAsync();
         }
     }
 }
