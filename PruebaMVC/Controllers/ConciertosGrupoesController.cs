@@ -6,29 +6,22 @@ using PruebaMVC.Services.Repositorio;
 
 namespace PruebaMVC.Controllers
 {
-    public class ConciertosGrupoesController : Controller
+    public class ConciertosGrupoesController(
+        IGenericRepositorio<ConciertosGrupo> context,
+        IGenericRepositorio<Concierto> contextConcierto,
+        IGenericRepositorio<Grupo> contextGrupo,
+        IGenericRepositorio<VistaConciertosGrupo> contextVista)
+        : Controller
     {
-        private readonly IGenericRepositorio<ConciertosGrupo> _context;
-        private readonly IGenericRepositorio<Concierto> _contextConcierto;
-        private readonly IGenericRepositorio<Grupo> _contextGrupo;
-        private readonly IGenericRepositorio<VistaConciertosGrupo> _contextVista;
         private const string DataConciertos = "ConciertosId";
         private const string DataGrupos = "GruposId";
         private const string DataComboTitulo = "Titulo";
         private const string DataComboNombre = "Nombre";
 
-        public ConciertosGrupoesController(IGenericRepositorio<ConciertosGrupo> context, IGenericRepositorio<Concierto> contextConcierto, IGenericRepositorio<Grupo> contextGrupo, IGenericRepositorio<VistaConciertosGrupo> contextVista)
-        {
-            _context = context;
-            _contextConcierto = contextConcierto;
-            _contextGrupo = contextGrupo;
-            _contextVista = contextVista;
-        }
-
         // GET: ConciertosGrupoes
         public async Task<IActionResult> Index()
         {
-            var grupoCContext = await _contextVista.DameTodos();
+            var grupoCContext = await contextVista.DameTodos();
             return View(grupoCContext);
         }
 
@@ -39,7 +32,7 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-            var vista = await _contextVista.DameTodos();
+            var vista = await contextVista.DameTodos();
             var conciertosGrupo = vista.AsParallel().FirstOrDefault(m => m.Id == id);
             if (conciertosGrupo == null)
             {
@@ -52,8 +45,8 @@ namespace PruebaMVC.Controllers
         // GET: ConciertosGrupoes/Create
         public async Task<IActionResult> Create()
         {
-            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo);
-            ViewData[DataGrupos] = new SelectList(await _contextGrupo.DameTodos(), "Id", DataComboNombre);
+            ViewData[DataConciertos] = new SelectList(await contextConcierto.DameTodos(), "Id", DataComboTitulo);
+            ViewData[DataGrupos] = new SelectList(await contextGrupo.DameTodos(), "Id", DataComboNombre);
             return View();
         }
 
@@ -66,11 +59,11 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.Agregar(conciertosGrupo);
+                await context.Agregar(conciertosGrupo);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
-            ViewData[DataGrupos] = new SelectList(await _contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
+            ViewData[DataConciertos] = new SelectList(await contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
+            ViewData[DataGrupos] = new SelectList(await contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
             return View(conciertosGrupo);
         }
 
@@ -82,12 +75,12 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
 
-            var conciertosGrupo = await _context.DameUno((int)id);
+            var conciertosGrupo = await context.DameUno((int)id);
 
-            var vista = await _contextVista.DameTodos();
+            var vista = await contextVista.DameTodos();
             var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
-            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
-            ViewData[DataGrupos] = new SelectList(await _contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
+            ViewData[DataConciertos] = new SelectList(await contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
+            ViewData[DataGrupos] = new SelectList(await contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
             return View(conjunto);
         }
 
@@ -107,7 +100,7 @@ namespace PruebaMVC.Controllers
             {
                 try
                 {
-                    await _context.Modificar(id, conciertosGrupo);
+                    await context.Modificar(id, conciertosGrupo);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,10 +115,10 @@ namespace PruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            var vista = await _contextVista.DameTodos();
+            var vista = await contextVista.DameTodos();
             var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
-            ViewData[DataConciertos] = new SelectList(await _contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
-            ViewData[DataGrupos] = new SelectList(await _contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
+            ViewData[DataConciertos] = new SelectList(await contextConcierto.DameTodos(), "Id", DataComboTitulo, conciertosGrupo.ConciertosId);
+            ViewData[DataGrupos] = new SelectList(await contextGrupo.DameTodos(), "Id", DataComboNombre, conciertosGrupo.GruposId);
             return View(conjunto);
         }
 
@@ -137,7 +130,7 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
 
-            var vista = await _contextVista.DameTodos();
+            var vista = await contextVista.DameTodos();
             var conciertosGrupo = vista.AsParallel()
                 .FirstOrDefault(m => m.Id == id);
 
@@ -151,14 +144,14 @@ namespace PruebaMVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
-                await _context.Borrar(id);
+                await context.Borrar(id);
 
             return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> ConciertosGrupoExists(int id)
         {
-            var vista = await _context.DameTodos();
+            var vista = await context.DameTodos();
             return vista.AsParallel().Any(e => e.Id == id);
         }
     }
