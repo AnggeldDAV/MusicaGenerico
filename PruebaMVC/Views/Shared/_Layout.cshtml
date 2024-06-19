@@ -254,6 +254,10 @@
             filtroPorFecha();
             paginacion();
         });
+        $('#ConciertoReset').on('click', function () {
+            $('.tarjeta').addClass('filtrado');
+            paginacion();
+        });
         function filtroPorTitulo() {
             for (let i = 0; i < $('.tarjeta').length; i++) {
                 if (!$('.nombre').eq(i).text().toLowerCase().includes($('#filtroNombreConcierto').val().toLowerCase())) {
