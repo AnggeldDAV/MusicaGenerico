@@ -208,23 +208,144 @@
         });
     </script>
     <script>
-        let tarjetasFiltradas = $('#contenedorTarjetas').children();
-        tarjetasFiltradas.addClass('filtrado');
+        $('.tarjeta').addClass('filtrado');
         $('#filtroNombreConcierto').on('change', function () {
-            for (let i = 0; i < tarjetasFiltradas.length; i++) {
-
-            }
-            if (!$('#nombre').text().includes($('#filtroNombreConcierto').val())) {
-
-            }
+            $('.tarjeta').addClass('filtrado');
+            filtroPorTitulo();
+            filtroPorLugar();
+            filtroPorNombreGrupo();
+            filtroPorPrecio();
+            filtroPorFecha();
+            paginacion();
         });
+        $('#valoresLugares').on('change', function () {
+            $('.tarjeta').addClass('filtrado');
+            filtroPorTitulo();
+            filtroPorLugar();
+            filtroPorNombreGrupo();
+            filtroPorPrecio();
+            filtroPorFecha();
+            paginacion();
+        });
+        $('#valoresGrupo').on('change', function () {
+            $('.tarjeta').addClass('filtrado');
+            filtroPorTitulo();
+            filtroPorLugar();
+            filtroPorNombreGrupo();
+            filtroPorPrecio();
+            filtroPorFecha();
+            paginacion();
+        });
+        $('#filtroPrecioConcierto').on('change', function () {
+            $('.tarjeta').addClass('filtrado');
+            filtroPorTitulo();
+            filtroPorLugar();
+            filtroPorNombreGrupo();
+            filtroPorPrecio();
+            filtroPorFecha();
+            paginacion();
+        });
+        $('#filtroFechaConcierto').on('change', function () {
+            $('.tarjeta').addClass('filtrado');
+            filtroPorTitulo();
+            filtroPorLugar();
+            filtroPorNombreGrupo();
+            filtroPorPrecio();
+            filtroPorFecha();
+            paginacion();
+        });
+        function filtroPorTitulo() {
+            for (let i = 0; i < $('.tarjeta').length; i++) {
+                if (!$('.nombre').eq(i).text().toLowerCase().includes($('#filtroNombreConcierto').val().toLowerCase())) {
+                    $('.tarjeta').eq(i).removeClass('filtrado');
+                }
+            }
+        }
+        function filtroPorLugar() {
+            if (!($('#valoresLugares').val() == "Todos")) {
+                for (let i = 0; i < $('.tarjeta').length; i++) {
+                    if (!($('#valoresLugares').val() == $('.lugar').eq(i).text())) {
+                        $('.tarjeta').eq(i).removeClass('filtrado');
+                    }
+                }
+            } 
+        }
+        function filtroPorNombreGrupo() {
+            if (!($('#valoresGrupo').val() == "Todos")) {
+                for (let i = 0; i < $('.tarjeta').length; i++) {
+                    if (!($('.nombreGrupo').eq(i).text().includes($('#valoresGrupo').val()))) {
+                        $('.tarjeta').eq(i).removeClass('filtrado');
+                    }
+                }
+            }
+        }
+        function filtroPorPrecio() {
+            switch($('#igualdadPrecio').val()) {
+                case "mayor": 
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(parseFloat($('.precio').eq(i).text()) > parseFloat($('#filtroPrecioConcierto').val()))) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                case "igual": 
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(parseFloat($('.precio').eq(i).text()) == parseFloat($('#filtroPrecioConcierto').val()))) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                case "menor":
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(parseFloat($('.precio').eq(i).text()) < parseFloat($('#filtroPrecioConcierto').val()))) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                default: break;
+            }
+        }
+        function filtroPorFecha() {
+            switch ($('#igualdadFecha').val()) {
+                case "mayor":
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(createDate($('.fecha').eq(i).text().substring(0, 10)).getTime() > crearFecha($('#filtroFechaConcierto').val()).getTime())) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                case "igual":
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(createDate($('.fecha').eq(i).text().substring(0, 10)).getTime() == crearFecha($('#filtroFechaConcierto').val()).getTime())) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                case "menor":
+                    for (let i = 0; i < $('.tarjeta').length; i++) {
+                        if (!(createDate($('.fecha').eq(i).text().substring(0, 10)).getTime() < crearFecha($('#filtroFechaConcierto').val()).getTime())) {
+                            $('.tarjeta').eq(i).removeClass('filtrado');
+                        }
+                    }
+                    break;
+                default: break;
+            }
+        }
+        function createDate(fecha) {
+            let arrayFecha = fecha.split('/');
+            return new Date(arrayFecha[1] + "/" + arrayFecha[0] + "/" + arrayFecha[2]);
+        }
+        function crearFecha(fecha) {
+            let arrayFecha = fecha.split('-');
+            return new Date(arrayFecha[1] + "/" + arrayFecha[2] + "/" + arrayFecha[0]);
+        }
     </script>
     <script>
         $('#pagSiguiente').on('click', pagSiguiente);
         $('#pagAnterior').on('click', pagAnterior);
         paginacion();
         function pagSiguiente() {
-            if (parseInt($('#pagActual').text()) != Math.floor($('.tarjeta').length/8) + 1) {
+            if (parseInt($('#pagActual').text()) != Math.floor($('.tarjeta').filter('.filtrado').length/8) + 1) {
                 $('#pagActual').text(parseInt($('#pagActual').text()) + 1);
                 $('#pagSiguiente').text(parseInt($('#pagActual').text()) + 1);
                 if (parseInt($('#pagActual').text()) != 2) $('#pagAnterior').text(parseInt($('#pagActual').text()) - 1);
@@ -242,7 +363,7 @@
         function paginacion() {
             $('.tarjeta').hide();
             for (let i = (parseInt($('#pagActual').text()) - 1) * 8; i < parseInt($('#pagActual').text()) * 8; i++) {
-                $('.tarjeta').eq(i).show();
+                $('.tarjeta').filter('.filtrado').eq(i).show();
             }
         }
     </script>
