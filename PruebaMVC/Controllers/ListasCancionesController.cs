@@ -1,44 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
-using System.Xml.Linq;
 
 namespace PruebaMVC.Controllers
 {
-   public class ListasCancionesController
-   (IGenericRepositorio<ListasCancione> context,
-       IGenericRepositorio<Cancione> contextCanciones,
-       IGenericRepositorio<Lista> contextListas): Controller
-   {
-
-    // GET: ListasCanciones
-    public async Task<IActionResult> Index()
+    public class ListasCancionesController(
+        IGenericRepositorio<ListasCancione> context,
+        IGenericRepositorio<Cancione> contextCanciones,
+        IGenericRepositorio<Lista> contextListas,
+        IGenericRepositorio<VistaListaCancione> contextVista)
+        : Controller
     {
-        var elemento = await context.DameTodos();
+        private const string DataCanciones = "CancionesId"; 
+        private const string DataLista = "ListasId"; 
+        private const string DataComboTitulo = "Titulo"; 
+        private const string DataComboNombre = "Nombre";
 
-        foreach (var item in elemento)
+        // GET: ListasCanciones
+        public async Task<IActionResult> Index()
         {
-            item.Canciones = await contextCanciones.DameUno((int)item.CancionesId);
-            item.Listas = await contextListas.DameUno((int)item.ListasId);
+            var grupoCContext = await contextVista.DameTodos();
+            return View(grupoCContext);
         }
 
-        return View(elemento);
-    }
-
-    // GET: ListasCanciones/Details/5
+        // GET: ListasCanciones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var vista = await _contextVista.DameTodos();
+            var vista = await contextVista.DameTodos();
             var listasCancione = vista.AsParallel()
                 .FirstOrDefault(m => m.Id == id);
 
-            var listasCancione = await context.DameUno((int)id);
 
             return View(listasCancione);
         }
@@ -46,10 +43,8 @@ namespace PruebaMVC.Controllers
         // GET: ListasCanciones/Create
         public async Task<IActionResult> Create()
         {
-
-            ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id");
-            ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id");
-
+            ViewData[DataCanciones] = new SelectList(await contextCanciones.DameTodos(), "Id", DataComboTitulo);
+            ViewData[DataLista] = new SelectList(await contextListas.DameTodos(), "Id", DataComboNombre);
             return View();
         }
 
@@ -62,13 +57,11 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 await context.Agregar(listasCancione);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.ListasId);
-
+            ViewData[DataCanciones] = new SelectList(await contextCanciones.DameTodos(), "Id", DataComboTitulo, listasCancione.CancionesId);
+            ViewData["ListasId"] = new SelectList(await contextListas.DameTodos(), "Id", DataComboNombre, listasCancione.ListasId);
             return View(listasCancione);
         }
 
@@ -81,10 +74,12 @@ namespace PruebaMVC.Controllers
             }
 
             var listasCancione = await context.DameUno((int)id);
-            ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.ListasId);
-            return View(listasCancione);
 
+            var vista = await contextVista.DameTodos();
+            var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
+            ViewData[DataCanciones] = new SelectList(await contextCanciones.DameTodos(), "Id", DataComboTitulo, listasCancione.CancionesId);
+            ViewData[DataLista] = new SelectList(await contextListas.DameTodos(), "Id", DataComboNombre, listasCancione.ListasId);
+            return View(conjunto);
         }
 
         // POST: ListasCanciones/Edit/5
@@ -98,11 +93,31 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-         
-            await context.Modificar(id,listasCancione);
-            ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.CancionesId);
-            ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.ListasId);
-            return View(listasCancione);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await context.Modificar(id, listasCancione);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ListasCancioneExists(listasCancione.Id).Result)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            var vista = await contextVista.DameTodos();
+            var conjunto = vista.AsParallel().FirstOrDefault(x => x.Id == id);
+            ViewData[DataCanciones] = new SelectList(await contextCanciones.DameTodos(), "Id", DataComboTitulo, listasCancione.CancionesId);
+            ViewData[DataLista] = new SelectList(await contextListas.DameTodos(), "Id", DataComboNombre, listasCancione.ListasId);
+            return View(conjunto);
         }
 
         // GET: ListasCanciones/Delete/5
@@ -112,12 +127,11 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-            var vista = await _contextVista.DameUno((int)id);
-            
+            var vista = await contextVista.DameTodos();
+            var listasCanciones = vista.AsParallel().FirstOrDefault(m => m.Id == id);
 
-            var listasCancione = await context.DameUno((int)id);
-            return View(listasCancione);
 
+            return View(listasCanciones);
         }
 
         // POST: ListasCanciones/Delete/5
@@ -125,7 +139,6 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var listasCancione = await context.DameUno(id);
             await context.Borrar(id);
 
             return RedirectToAction(nameof(Index));
@@ -133,9 +146,8 @@ namespace PruebaMVC.Controllers
 
         private async Task<bool> ListasCancioneExists(int id)
         {
-            var elemento = await context.DameTodos();
-            return elemento.Exists(e=>e.Id==id);
-
+            var vista = await context.DameTodos();
+            return vista.AsParallel().Any(e => e.Id == id);
         }
     }
 }
