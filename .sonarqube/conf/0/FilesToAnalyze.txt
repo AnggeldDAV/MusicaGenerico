@@ -1,4 +1,4 @@
-﻿C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Controllers\AlbumesController.cs
+C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Controllers\AlbumesController.cs
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Controllers\ArtistasController.cs
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Controllers\CancionesConciertoesController.cs
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Controllers\CancionesController.cs
@@ -230,3 +230,5 @@ C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Views\_Vi
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Views\_ViewStart.cshtml
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Views\Shared\_Layout.cshtml.css
 C:\Users\Alumno\source\repos\MusicaGenerico\PruebaMVC-master\PruebaMVC\Properties\launchSettings.json
+
+

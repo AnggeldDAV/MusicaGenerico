@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
@@ -77,18 +71,11 @@ namespace PruebaMVC.Controllers
         // GET: Grupoes/Details/5
             public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
 
             var vista = await _context.DameTodos();
             var grupo = vista
                 .FirstOrDefault(m => m.Id == id);
-            if (grupo == null)
-            {
-                return NotFound();
-            }
 
             return View(grupo);
         }
@@ -117,16 +104,10 @@ namespace PruebaMVC.Controllers
         // GET: Grupoes/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+           
 
             var grupo = await _context.DameUno(id);
-            if (grupo == null)
-            {
-                return NotFound();
-            }
+            
             return View(grupo);
         }
 

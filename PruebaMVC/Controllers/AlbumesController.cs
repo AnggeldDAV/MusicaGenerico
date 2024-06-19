@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using NuGet.DependencyResolver;
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
 
@@ -69,9 +63,10 @@ namespace PruebaMVC.Controllers
 
         public async Task<IActionResult> IndexConsulta()
         {
+            var letra = 'u';
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.Select(x => x).
-                           Where(x => x.Genero == "Heavy Metal" && x.Titulo.Contains("u"));
+                           Where(x => x.Genero == "Heavy Metal" && x.Titulo.Contains(letra));
             return View(conjunto);
         }
 
@@ -108,7 +103,7 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Agregar(albume);
+                await _context.Agregar(albume);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GruposId"] = new SelectList(await _contextGrupo.DameTodos(), "Id", "Nombre", albume.GruposId);
@@ -118,17 +113,8 @@ namespace PruebaMVC.Controllers
         // GET: Albumes/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var albume = await _context.DameUno(id);
-            if (albume == null)
-            {
-                return NotFound();
-            }
-
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.FirstOrDefault(x => x.Id == id);
             ViewData["GruposId"] = new SelectList(await _contextGrupo.DameTodos(), "Id", "Nombre", albume.GruposId);
@@ -151,7 +137,7 @@ namespace PruebaMVC.Controllers
             {
                 try
                 {
-                    _context.Modificar(id, albume);
+                   await _context.Modificar(id, albume);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -176,11 +162,7 @@ namespace PruebaMVC.Controllers
         // GET: Albumes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+         
             var vista = await _contextVista.DameTodos();
             var albume =vista.FirstOrDefault(x => x.Id == id);
             if (albume == null)

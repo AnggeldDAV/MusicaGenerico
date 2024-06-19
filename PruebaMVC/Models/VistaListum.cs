@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace PruebaMVC.Models;
 
-public partial class VistaListum
+public class VistaListum
 {
     public int Id { get; set; }
 
