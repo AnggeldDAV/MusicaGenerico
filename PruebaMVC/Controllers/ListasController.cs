@@ -68,7 +68,7 @@ namespace PruebaMVC.Controllers
         }
 
         // GET: Listas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             var lista = await context.DameUno(id);
             var vista = await context.DameTodos();
