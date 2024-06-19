@@ -34,16 +34,22 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
+            var vista = await _contextVista.DameTodos();
+            var listasCancione = vista.AsParallel()
+                .FirstOrDefault(m => m.Id == id);
 
             var listasCancione = await context.DameUno((int)id);
+
             return View(listasCancione);
         }
 
         // GET: ListasCanciones/Create
         public async Task<IActionResult> Create()
         {
+
             ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id");
             ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id");
+
             return View();
         }
 
@@ -56,11 +62,13 @@ namespace PruebaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 await context.Agregar(listasCancione);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.CancionesId);
             ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.ListasId);
+
             return View(listasCancione);
         }
 
@@ -76,6 +84,7 @@ namespace PruebaMVC.Controllers
             ViewData["CancionesId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.CancionesId);
             ViewData["ListasId"] = new SelectList(await context.DameTodos(), "Id", "Id", listasCancione.ListasId);
             return View(listasCancione);
+
         }
 
         // POST: ListasCanciones/Edit/5
@@ -103,9 +112,12 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
+            var vista = await _contextVista.DameUno((int)id);
+            
 
             var listasCancione = await context.DameUno((int)id);
             return View(listasCancione);
+
         }
 
         // POST: ListasCanciones/Delete/5
@@ -115,6 +127,7 @@ namespace PruebaMVC.Controllers
         {
             var listasCancione = await context.DameUno(id);
             await context.Borrar(id);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -122,6 +135,7 @@ namespace PruebaMVC.Controllers
         {
             var elemento = await context.DameTodos();
             return elemento.Exists(e=>e.Id==id);
+
         }
     }
 }

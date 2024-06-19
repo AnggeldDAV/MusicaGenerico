@@ -35,6 +35,7 @@ namespace PruebaMVC.Controllers
             {
                 if (item.UsuarioId != null) item.Usuario = await contextUsuario.DameUno((int)item.UsuarioId);
             }
+
             var lista = vista.FirstOrDefault(m => m.Id == id);
             if (lista == null)
             {
@@ -67,7 +68,7 @@ namespace PruebaMVC.Controllers
         }
 
         // GET: Listas/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             var lista = await context.DameUno(id);
             var vista = await context.DameTodos();
@@ -120,6 +121,7 @@ namespace PruebaMVC.Controllers
                 return NotFound();
             }
             var vista = await context.DameTodos();
+
             var lista = vista
                 .FirstOrDefault(m => m.Id == id);
             if (lista == null)

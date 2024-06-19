@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PruebaMVC.Models;
 using PruebaMVC.Services.Repositorio;
@@ -54,7 +61,7 @@ namespace PruebaMVC.Controllers
         public async Task<IActionResult> IndexConsulta()
         {
             var vista = await _context.DameTodos();
-            var consulta = vista.Where(x => x.FechaNac.Value.Year >1950);
+            var consulta = vista.Where(x => x.FechaNac !=null && x.FechaNac.Value.Year >1950);
             return View(consulta);
         }
 
@@ -78,7 +85,7 @@ namespace PruebaMVC.Controllers
         }
 
         // GET: Artistas/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -109,16 +116,9 @@ namespace PruebaMVC.Controllers
         // GET: Artistas/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+         
             var artista = await _context.DameUno(id);
-            if (artista == null)
-            {
-                return NotFound();
-            }
+            
             return View(artista);
         }
 

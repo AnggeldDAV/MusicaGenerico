@@ -1,4 +1,4 @@
-﻿@model PruebaMVC.Models.ListasCancione
+﻿@model PruebaMVC.Models.VistaListaCancione
 
 @{
     ViewData["Title"] = "Delete";
@@ -11,20 +11,24 @@
     <h4>Listas de Canciones</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Canciones)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Titulo)
         </dt>
+
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Canciones!.Id)
+
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Listas)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
+
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Listas!.Id)
+
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |

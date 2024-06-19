@@ -71,18 +71,11 @@ namespace PruebaMVC.Controllers
         // GET: Grupoes/Details/5
             public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
 
             var vista = await _context.DameTodos();
             var grupo = vista
                 .FirstOrDefault(m => m.Id == id);
-            if (grupo == null)
-            {
-                return NotFound();
-            }
 
             return View(grupo);
         }
@@ -111,16 +104,10 @@ namespace PruebaMVC.Controllers
         // GET: Grupoes/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+           
 
             var grupo = await _context.DameUno(id);
-            if (grupo == null)
-            {
-                return NotFound();
-            }
+            
             return View(grupo);
         }
 
