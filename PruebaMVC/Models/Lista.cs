@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PruebaMVC.Models;
+﻿namespace PruebaMVC.Models;
 
 public partial class Lista
 {
@@ -11,7 +8,7 @@ public partial class Lista
 
     public int? UsuarioId { get; set; }
 
-    public virtual ICollection<ListasCancione> ListasCanciones { get; set; } = new List<ListasCancione>();
+    public virtual ICollection<ListasCancione> ListasCanciones { get; set; } = [];
 
     public virtual Usuario? Usuario { get; set; }
 }

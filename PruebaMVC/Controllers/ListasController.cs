@@ -8,14 +8,18 @@ namespace PruebaMVC.Controllers
 {
     public class ListasController(
         IGenericRepositorio<Lista> context,
-        IGenericRepositorio<Usuario> contextUsuario,
-        IGenericRepositorio<VistaListum> contextVista)
+        IGenericRepositorio<Usuario> contextUsuario)
         : Controller
     {
         // GET: Listas
         public async Task<IActionResult> Index()
         {
-            var grupoCContext = await contextVista.DameTodos();
+            var grupoCContext = await context.DameTodos();
+            foreach (var item in grupoCContext)
+            {
+                if (item.UsuarioId != null) item.Usuario = await contextUsuario.DameUno((int)item.UsuarioId);
+            }
+
             return View(grupoCContext);
         }
 
@@ -26,13 +30,17 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-            var vista = await contextVista.DameTodos();
+            var vista = await context.DameTodos();
+            foreach (var item in vista)
+            {
+                if (item.UsuarioId != null) item.Usuario = await contextUsuario.DameUno((int)item.UsuarioId);
+            }
+
             var lista = vista.FirstOrDefault(m => m.Id == id);
             if (lista == null)
             {
                 return NotFound();
             }
-
             return View(lista);
         }
 
@@ -62,14 +70,8 @@ namespace PruebaMVC.Controllers
         // GET: Listas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lista = await context.DameUno((int)id);
-
-            var vista = await contextVista.DameTodos();
+            var lista = await context.DameUno(id);
+            var vista = await context.DameTodos();
             var conjunto = vista.FirstOrDefault(x => x.Id == id);
             ViewData["UsuarioId"] = new SelectList(await contextUsuario.DameTodos(), "Id", "Nombre", lista.UsuarioId);
             return View(conjunto);
@@ -107,10 +109,8 @@ namespace PruebaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            var vista = await contextVista.DameTodos();
-            var conjunto = vista.FirstOrDefault(x => x.Id == id);
             ViewData["UsuarioId"] = new SelectList(await contextUsuario.DameTodos(), "Id", "Id", lista.UsuarioId);
-            return View(conjunto);
+            return View(lista);
         }
 
         // GET: Listas/Delete/5
@@ -120,7 +120,8 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-            var vista = await contextVista.DameTodos();
+            var vista = await context.DameTodos();
+
             var lista = vista
                 .FirstOrDefault(m => m.Id == id);
             if (lista == null)
@@ -136,8 +137,7 @@ namespace PruebaMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lista = await context.DameUno(id);
-
+            await context.Borrar(id);
             return RedirectToAction(nameof(Index));
         }
 

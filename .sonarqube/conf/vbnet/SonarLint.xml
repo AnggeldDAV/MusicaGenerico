@@ -390,6 +390,7 @@
           <Key>propertyThreshold</Key>
           <Value>3</Value>
         </Parameter>
+
       </Parameters>
     </Rule>
     <Rule>
