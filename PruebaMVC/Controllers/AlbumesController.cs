@@ -66,7 +66,7 @@ namespace PruebaMVC.Controllers
             var letra = 'u';
             var vista = await _contextVista.DameTodos();
             var conjunto = vista.Select(x => x).
-                           Where(x => x.Genero == "Heavy Metal" && x.Titulo.Contains(letra));
+                           Where(x => x.Genero == "Heavy Metal" && x.Titulo != null && x.Titulo.Contains(letra));
             return View(conjunto);
         }
 
