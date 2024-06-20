@@ -12,7 +12,7 @@ namespace PruebaMVC.Controllers
         IGenericRepositorio<VistaCancione> contextVista)
         : Controller
     {
-        public const string albumId = "AlbumesId";
+        public const string AlbumId = "AlbumesId";
         // GET: Canciones
         public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
@@ -67,7 +67,7 @@ namespace PruebaMVC.Controllers
         // GET: Canciones/Create
         public async Task<IActionResult> Create()
         {
-            ViewData[albumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Titulo");
+            ViewData[AlbumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Titulo");
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace PruebaMVC.Controllers
                 await context.Agregar(cancione);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData[albumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Id", cancione.AlbumesId);          
+            ViewData[AlbumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Id", cancione.AlbumesId);          
             return View(cancione);
         }
 
@@ -96,7 +96,7 @@ namespace PruebaMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData[albumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Titulo", cancione.AlbumesId);
+            ViewData[AlbumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Titulo", cancione.AlbumesId);
             return View(cancione);
         }
 
@@ -133,7 +133,7 @@ namespace PruebaMVC.Controllers
             }
             var vista = await contextVista.DameTodos();
             var conjunto = vista.Find(x => x.Id == id);
-            ViewData[albumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Id", cancione.AlbumesId);
+            ViewData[AlbumId] = new SelectList(await contextAlbume.DameTodos(), "Id", "Id", cancione.AlbumesId);
             return View(conjunto);
         }
 
