@@ -256,12 +256,16 @@ a {
 
 }
 
+.scroll {
+    scrollbar-color: #0059b3 #3399ff;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 25px;
 }
 
-/* Track */
+ /*Track */
 ::-webkit-scrollbar-track {
     background: #3399ff;
     border-radius: 25px
@@ -273,7 +277,7 @@ a {
     border-radius: 25px;
 }
 
-/* Handle on hover */
+ /*Handle on hover*/ 
 ::-webkit-scrollbar-thumb:hover {
     background: #001a33;
 }

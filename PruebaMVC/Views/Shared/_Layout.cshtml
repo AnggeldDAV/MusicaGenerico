@@ -124,6 +124,11 @@
     <!--JQuery-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
+        if (navigator.userAgent.search("Firefox") >= 0) {
+            $('#Filtro').addClass('scroll');
+        }
+    </script>
+    <script>
         $(window).on("load", giveSize);
         $(window).on("resize", giveSize);
         function giveSize() {
