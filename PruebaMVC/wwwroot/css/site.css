@@ -256,4 +256,26 @@ a {
 
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 25px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #3399ff;
+    border-radius: 25px
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #0059b3;
+    border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #001a33;
+}
+
 
